@@ -103,12 +103,12 @@ const App = () => {
 
     socketRef.current.on("your id", id => {
       setYourID(id);
-    });
+    })
 
     socketRef.current.on("message", (message) => {
       console.log("here");
       receivedMessage(message);
-    });
+    })
   }, []);
 
   function receivedMessage(message) {
@@ -116,12 +116,12 @@ const App = () => {
   }
 
   function sendMessage(e) {
+    e.preventDefault();
     const messageObject = {
       body: message,
       id: yourID
     };
     setMessage("");
-    console.log("send message" + messageObject);
     socketRef.current.emit("send message", messageObject);
   }
 
@@ -139,17 +139,18 @@ const App = () => {
                 <MyMessage>
                   {message.body}
                 </MyMessage>
-              </MyRow>)
+              </MyRow>
+            )
           }
-          return(
-          <PartnerRow key={index}>
-            <PartnerMessage>
-              {message.body}
-            </PartnerMessage>
-          </PartnerRow>)
+          return (
+            <PartnerRow key={index}>
+              <PartnerMessage>
+                {message.body}
+              </PartnerMessage>
+            </PartnerRow>
+          )
         })}
       </Container>
-
       <Form onSubmit={sendMessage}>
         <TextArea value={message} onChange={handleChange} placeholder="Say something..." />
         <Button>Send</Button>

@@ -7,7 +7,10 @@ const socket = require('socket.io');
 const io = socket(server);
 
 io.on("connection", socket => {
-    socket.emit("Your id: ", socket.id);
+    socket.emit("your id", socket.id);
+    socket.on("send message", body => {
+        io.emit("message", body);
+    })
 })
 
 server.listen(8080, () => {
